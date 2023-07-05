@@ -5,5 +5,8 @@
   "description": "A extension helps your to change the language-specify words in the url.",
   "icons": {
     "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
   }
 }
