@@ -9,5 +9,22 @@
   "action": {
     "default_popup": "popup/popup.html"
   },
-  "permissions": ["tabs", "activeTab"]
+  "permissions": ["tabs", "activeTab"],
+  "background": {
+    "service_worker": "serviceWorker/serviceWorker.js"
+  },
+  "commands": {
+    "transToLan": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      },
+      "description": "Replace 'From Language' keyword in URL to 'To Language' "
+    },
+    "transFromLan": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Replace 'To Language' keyword in URL to 'From Language' "
+    }
+  }
 }
