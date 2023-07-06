@@ -2,6 +2,8 @@ let currentTab = null;
 let targetUrl = "";
 let dir = "fromToTo";
 let shiftPressed = false;
+let fromLan = "";
+let toLan = "";
 
 chrome.commands.onCommand.addListener(function (command) {
     console.log('onCommand event received for message: ', command);
@@ -23,8 +25,6 @@ chrome.commands.onCommand.addListener(function (command) {
 });
 
 function updateCurrentTab() {
-    let fromLan = "en-us";
-    let toLan = "zh-tw";
     let currentUrl = currentTab?.url;
     if ((currentUrl.indexOf(fromLan) != -1 && dir == "fromToTo") ||
         (currentUrl.indexOf(toLan) != -1 && dir == "toToFrom")) {
@@ -41,7 +41,30 @@ function updateCurrentTab() {
 function updateCurrentTabUrlVariable() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         currentTab = tabs[0];
-        console.log(currentTab);
+        updateFromLanguageSetting();
+    });
+}
+
+function updateFromLanguageSetting() {
+    chrome.storage.local.get("ULMfromLan").then((result) => {
+        if (result === null) {
+            fromLan = "en-us";
+        }
+        else {
+            fromLan = result["ULMfromLan"];
+        }
+        updateToLanguageSetting();
+    });
+}
+function updateToLanguageSetting() {
+    chrome.storage.local.get("ULMtoLan").then((result) => {
+        if (result === null) {
+            toLan = "zh-tw";
+        }
+        else {
+            toLan = result["ULMtoLan"];
+        }
+        console.log(fromLan, toLan);
         updateCurrentTab();
     });
 }

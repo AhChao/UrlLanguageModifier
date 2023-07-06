@@ -1,41 +1,33 @@
-let currentTab = null;
-let targetUrl = "";
-let dir = "fromToTo";
-document.onkeydown = function (e) {
-    if (e.key === "l" && e.ctrlKey && e.altKey) {
-        dir = "fromToTo";
-        updateCurrentTabUrlVariable();
-    }
-    else if (e.key === ";" && e.ctrlKey && e.altKey) {
-        dir = "toToFrom";
-        updateCurrentTabUrlVariable();
-    }
-}
-
-function updateCurrentTab() {
-    let fromLan = document.getElementById("fromLan").value;
-    let toLan = document.getElementById("toLan").value;
-    let currentUrl = currentTab?.url;
-    if ((currentUrl.indexOf(fromLan) != -1 && dir == "fromToTo") ||
-        (currentUrl.indexOf(toLan) != -1 && dir == "toToFrom")) {
-        targetUrl = dir == "fromToTo" ? currentUrl.replace(fromLan, toLan) : currentUrl.replace(toLan, fromLan);
-        chrome.tabs.update(
-            currentTab.id, { url: targetUrl }, () => {
-                document.getElementById("input").value = "callback done";
-            }
-        );
-    }
-    else {
-        document.getElementById("input").value = "Current Tab not include language-specify words in URL.";
-    }
-}
-
-function updateCurrentTabUrlVariable() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        // since only one tab should be active and in the current window at once
-        // the return variable should only have one entry
-        currentTab = tabs[0];
-        document.getElementById("input").value = tabs[0].url;
-        updateCurrentTab();
+function changeLangSetting(lanTarget) {
+    let value = document.getElementById(lanTarget).value;
+    let key = "ULM" + lanTarget;
+    chrome.storage.local.set({ [key]: value }).then(() => {
+        console.log(key + " changed to " + value);
     });
+    init();
 }
+
+function init() {
+    chrome.storage.local.get("ULMfromLan").then((result) => {
+        console.log("from:", result, result["ULMfromLan"]);
+        if (result === null) {
+            document.getElementById("fromLan").value = "en-us";
+        }
+        else {
+            document.getElementById("fromLan").value = result["ULMfromLan"];
+        }
+    });
+    chrome.storage.local.get("ULMtoLan").then((result) => {
+        console.log("to:", result, result["ULMtoLan"]);
+        if (result === null) {
+            document.getElementById("toLan").value = "zh-tw";
+        }
+        else {
+            document.getElementById("toLan").value = result["ULMtoLan"];
+        }
+    });
+    document.getElementById('fromLan').onchange = () => { changeLangSetting('fromLan'); }
+    document.getElementById('toLan').onchange = () => { changeLangSetting('toLan'); }
+}
+
+init();

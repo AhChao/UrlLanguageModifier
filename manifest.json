@@ -9,7 +9,7 @@
   "action": {
     "default_popup": "popup/popup.html"
   },
-  "permissions": ["tabs", "activeTab"],
+  "permissions": ["tabs", "activeTab", "storage"],
   "background": {
     "service_worker": "serviceWorker/serviceWorker.js"
   },
