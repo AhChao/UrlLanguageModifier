@@ -1,6 +1,6 @@
 {
   "name": "Url Language Modifier",
-  "version": "0.0.0.1",
+  "version": "1.0.0",
   "manifest_version": 3,
   "description": "A extension helps your to change the language-specify words in the url.",
   "icons": {
