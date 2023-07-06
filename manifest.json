@@ -16,15 +16,21 @@
   "commands": {
     "transToLan": {
       "suggested_key": {
+        "default": "Alt+K"
+      },
+      "description": "Replace 'From Language' keyword in URL to 'To Language'"
+    },
+    "transToLanNew": {
+      "suggested_key": {
         "default": "Alt+Shift+K"
       },
-      "description": "Replace 'From Language' keyword in URL to 'To Language' "
+      "description": "Replace 'From Language' keyword in URL to 'To Language', open in a new tab"
     },
     "transFromLan": {
       "suggested_key": {
-        "default": "Alt+Shift+L"
+        "default": "Alt+L"
       },
-      "description": "Replace 'To Language' keyword in URL to 'From Language' "
+      "description": "Replace 'To Language' keyword in URL to 'From Language'"
     }
   }
 }
