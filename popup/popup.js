@@ -4,7 +4,6 @@ function changeLangSetting(lanTarget) {
     chrome.storage.local.set({ [key]: value }).then(() => {
         console.log(key + " changed to " + value);
     });
-    init();
 }
 
 function init() {
